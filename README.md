@@ -1,6 +1,23 @@
 # Official YOLOv7
 
-weights 文件下载地址:
+weights 文件下载地址:链接：https://pan.baidu.com/s/1MWEjWE7j_6PW6qPF0wGExA?pwd=o68s 
+提取码：o68s 
+
+训练学生网络：
+python train.py --data data/coco128.yaml --cfg cfg/training/yolov7-tiny.yaml 
+--weights yolov7-tiny.pt --batch-size 16 --epochs 300 --workers 8 --name yolov7-stduent-baseline
+
+训练教师网络：
+python train.py --data data/coco128.yaml --cfg cfg/training/yolov7-tiny-large.yaml 
+--weights yolov7-tiny.pt --batch-size 16 --epochs 300 --workers 8 --name yolov7-teacher-baseline
+
+知识蒸馏的训练：
+python train_distillation.py --weights weights/yolov7_student.pt 
+--cfg cfg/training/yolov7-tiny.yaml --data data/coco128.yaml 
+--batch-size 8 --epochs 300 --workers 8 --t_weights weights/yolov7_teacher.pt 
+--hyp data/hyp.scratch.p5-distillation.yaml --distill --dist_loss l2 --name yolov7-distilled
+
+The code will be made public after the paper is accepted
 
 Implementation of paper - [YOLOv7: Trainable bag-of-freebies sets new state-of-the-art for real-time object detectors](https://arxiv.org/abs/2207.02696)
 
