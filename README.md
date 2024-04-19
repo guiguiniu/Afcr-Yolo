@@ -3,6 +3,14 @@
 weights 文件下载地址:链接：https://pan.baidu.com/s/1MWEjWE7j_6PW6qPF0wGExA?pwd=o68s 
 提取码：o68s 
 
+数据集下载地址：
+CCTSDB2021交通标志数据集
+链接：https://pan.baidu.com/s/1hyGmwLzcPi21XEP1MQsj5Q
+提取码：nygx
+
+Flow-Img下载地址
+https://github.com/ORCA-Uboat/FloW-Dataset
+
 训练学生网络：
 python train.py --data data/coco128.yaml --cfg cfg/training/yolov7-tiny.yaml 
 --weights yolov7-tiny.pt --batch-size 16 --epochs 300 --workers 8 --name yolov7-stduent-baseline
