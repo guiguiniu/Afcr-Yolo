@@ -1,4 +1,4 @@
-# YOLOv7 Knowledge Distill
+# AFCR-YOLOv7 Knowledge Feature Distill
 
 weights 文件下载地址:链接：https://pan.baidu.com/s/1MWEjWE7j_6PW6qPF0wGExA?pwd=o68s 
 提取码：o68s 
