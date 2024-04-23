@@ -2062,59 +2062,6 @@ class Conv_ATT(nn.Module):
 import torch
 import torch.nn as nn
 
-class WeightedSum(nn.Module):
-    def __init__(self, num_weights=4):
-        super(WeightedSum, self).__init__()
-        self.num_weights = num_weights
-        self.weights = nn.Parameter(torch.ones(num_weights), requires_grad=True)
-        self.attention = nn.Sequential(
-            nn.Linear(num_weights, num_weights),  # 注意力模块，这里使用一个全连接层
-            nn.Sigmoid()  # 注意力分数通过Sigmoid函数归一化
-        )
-
-    def forward(self, x):
-        attention_scores = self.attention(self.weights)  # 计算注意力分数
-        weighted_sum = sum(x[i] * attention_scores[i] for i in range(self.num_weights))  # 注意力加权和
-        return weighted_sum
-
-class MBConv(nn.Module):
-    def __init__(self, c1, c2, s, expand_ratio=1, use_se=True):
-        super(MBConv, self).__init__()
-        assert s in [1, 2]
-
-        hidden_dim = round(c1 * expand_ratio)
-        self.identity = s == 1 and c1 == c2
-        if use_se:
-            self.conv = nn.Sequential(
-                # pw
-                nn.Conv2d(c1, hidden_dim, 1, 1, 0, bias=False),
-                nn.BatchNorm2d(hidden_dim),
-                nn.SiLU(),
-                # dw
-                nn.Conv2d(hidden_dim, hidden_dim, 3, s, 1, groups=hidden_dim, bias=False),
-                nn.BatchNorm2d(hidden_dim),
-                nn.SiLU(),
-                SELayer(c1, hidden_dim),
-                # pw-linear
-                nn.Conv2d(hidden_dim, c2, 1, 1, 0, bias=False),
-                nn.BatchNorm2d(c2),
-            )
-        else:
-            self.conv = nn.Sequential(
-                # fused
-                nn.Conv2d(c1, hidden_dim, 3, s, 1, bias=False),
-                nn.BatchNorm2d(hidden_dim),
-                nn.SiLU(),
-                # pw-linear
-                nn.Conv2d(hidden_dim, c2, 1, 1, 0, bias=False),
-                nn.BatchNorm2d(c2),
-            )
-
-    def forward(self, x):
-        if self.identity:
-            return x + self.conv(x)
-        else:
-            return self.conv(x)
 
 class SELayer(nn.Module):
     def __init__(self, inp, oup, reduction=4):
