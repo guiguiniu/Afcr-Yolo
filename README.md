@@ -27,7 +27,7 @@ python train_distillation.py --weights weights/yolov7_student.pt
 
 The code will be made public after the paper is accepted
 
-论文已投稿《计算机应用研究》期刊，目前处于审稿中，只公开训练好的模型和演示效果文件，论文录用后会正式公开代码。
+论文已投稿《计算机工程与应用》期刊，目前处于审稿中，只公开训练好的模型和演示效果文件，论文录用后会正式公开代码。
 
 
 Implementation of paper - [YOLOv7: Trainable bag-of-freebies sets new state-of-the-art for real-time object detectors](https://arxiv.org/abs/2207.02696)
